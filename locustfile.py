@@ -3,7 +3,7 @@ import locust.stats
 
 
 @events.init.add_listener
-def on_locust_bootstrap(**kwargs):
+def on_locust_bootstrap(**_kwargs):
     locust.stats.PERCENTILES_TO_CHART = [0.5, 0.9, 0.95, 0.99]
 
 

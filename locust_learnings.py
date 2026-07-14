@@ -377,6 +377,76 @@ Example:
     @task(1) contact page   -> least common
 
 This is better than making every user do every page every cycle.
+
+
+21. Common performance testing types
+
+Assume expected traffic is:
+    200 users
+
+That means 200 users is the normal load you expect the system to handle.
+The examples below compare each test type against that expected traffic.
+
+Smoke test:
+    A very small test to check that the Locust script and app work.
+    This is far below expected traffic.
+    Example: 5 users for 1 minute.
+
+Load test:
+    Tests expected or normal traffic.
+    This should match expected traffic.
+    Example: 200 users for 30 minutes.
+
+Stress test:
+    Pushes above expected traffic to find where the system slows down,
+    fails, or stops scaling.
+    Example: expected 200 users -> 500 -> 1000 -> 2000 users.
+
+Spike test:
+    Sudden jump in traffic, then usually a sudden drop.
+    This jumps far above expected traffic very quickly.
+    Example: expected 200 users -> sudden 1000 users -> back to 200 users.
+
+Recovery test:
+    Overload the system, then return to expected load and check whether
+    response times, errors, and queues return to normal.
+    Example: expected 200 users -> overload at 1000 users -> back to
+    expected 200 users.
+
+Soak test:
+    Runs normal load for a long time to find memory leaks or slow degradation.
+    This usually runs at expected traffic for a long time.
+    Example: expected 200 users for 6 hours.
+
+Ramp-up test:
+    Gradually increases traffic.
+    This may ramp from below expected traffic to expected traffic, or beyond it.
+    Example: 50 -> 100 -> expected 200 -> 400 users.
+
+Scalability test:
+    Checks how the system behaves as traffic increases, often while adding
+    more servers or resources.
+    Example: expected 200 users on 1 server, 500 users on 2 servers,
+    1000 users on 4 servers.
+
+Breakpoint test:
+    Keeps increasing traffic until the system fails or performance becomes
+    unacceptable.
+    This starts at or below expected traffic, then keeps going above it.
+    Example: expected 200 -> 400 -> 800 -> 1200 users until response time
+    or error rate is too high.
+
+Volume test:
+    Tests the system with lots of data, not just lots of users.
+    User load may stay at expected traffic, but the database/data size is large.
+    Example: expected 200 users with a large database, many products/orders,
+    or high event volume.
+
+Capacity test:
+    Finds the max traffic the system can handle while still meeting targets.
+    This tells you whether expected traffic is safe and how much room is left.
+    Example: find the max users while 95% response time stays under 1200 ms.
+    Result example: system supports 650 users, so expected 200 users has room.
 """
 
 from locust import HttpUser, between, task
